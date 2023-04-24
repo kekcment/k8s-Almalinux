@@ -7,9 +7,9 @@
   debug:
     msg: "{{ networking_solution }}"
 
-- name: Install weave
-  include_tasks: ./setup-weave.yaml
-  when: networking_solution == 'weave'
+# - name: Install weave
+#   include_tasks: ./setup-weave.yaml
+#   when: networking_solution == 'weave'
 
 - name: Install flannel
   include_tasks: ./setup-flannel.yaml

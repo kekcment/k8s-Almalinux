@@ -4,6 +4,6 @@
   register: kubectl_version
 
 - name: Install Weave
-  command: "kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version={{ kubectl_version.stdout }}"
+  shell: "kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version={{ kubectl_version.stdout }}"
   register: weave_result
   changed_when: "'created' in weave_result.stdout"

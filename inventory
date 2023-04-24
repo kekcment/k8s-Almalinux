@@ -1,11 +1,14 @@
 [kubemaster1]
-tst-alma-k8s-m1 ansible_ssh_host=192.168.33.9
+; tst-alma-k8s-m1 ansible_ssh_host=192.168.33.9 ansible_user=localadmin
+192.168.33.9 ansible_user=localadmin
 
 [kubeworker1]
-tst-alma-k8s-w1 ansible_ssh_host=192.168.33.27
+; tst-alma-k8s-w1 ansible_ssh_host=192.168.33.27 ansible_user=localadmin
+192.168.33.27 ansible_user=localadmin
 
 [kubeworker2]
-tst-alma-k8s-w2 ansible_ssh_host=192.168.35.8
+; tst-alma-k8s-w2 ansible_ssh_host=192.168.35.8 ansible_user=localadmin
+192.168.35.8 ansible_user=localadmin
 
 [kubemasters:children]
 kubemaster1
@@ -25,8 +28,8 @@ kubemasters
 kubeworkers
 
 [vms:vars]
-ansible_user=vagrant
-ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+ansible_user=localadmin
+ansible_ssh_private_key_file=~/.ssh/do_test_key
 
 [pimaster1]
 192.168.1.221

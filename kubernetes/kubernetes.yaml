@@ -16,39 +16,41 @@
     - net.bridge.bridge-nf-call-ip6tables
 
 - name: Update apt package index for installing deps
-  apt:
+  yum:
     update_cache: yes
 
-- name: Install deps
-  apt:
-    name:
-    - apt-transport-https
-    - curl
+# - name: Install deps
+#   yum:
+#     name:
+#     - apt-transport-https
+#     - curl
 
-- name: Add google cloud GPG key
-  apt_key:
-    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
-    state: present
-    # commenting this out because apt-key module doesnt seem to be detecting it properly
-    # id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+# - name: Add google cloud GPG key
+#   apt_key:
+#     url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+#     state: present
+#     # commenting this out because apt-key module doesnt seem to be detecting it properly
+#     # id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 
-- name: Add kubernetes repository
-  apt_repository:
-    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
-    state: present
-    update_cache: yes
+- name: Add kubernetes repository YUM repository
+  yum_repository:
+    name: Kubernetes
+    description: Kubernetes YUM repository
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    gpgcheck: yes
 
 - name: Update apt package index
-  apt:
+  yum:
     update_cache: yes
 
 - name: Install kubernetes packages
-  apt:
+  yum:
     name:
     - kubelet
     - kubeadm
     - kubectl
-    allow_unauthenticated: yes
+    # allow_unauthenticated: yes
   notify: 
   - Restart kubelet
 
