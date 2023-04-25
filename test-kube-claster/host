@@ -1,0 +1,6 @@
+[master]
+tst-alma-k8s-m1 ansible_ssh_host=192.168.33.9 ansible_user=localadmin
+
+[workers]
+tst-alma-k8s-w1 ansible_ssh_host=192.168.33.27 ansible_user=localadmin
+tst-alma-k8s-w2 ansible_ssh_host=192.168.35.8 ansible_user=localadmin

@@ -51,6 +51,7 @@
     - kubeadm
     - kubectl
     # allow_unauthenticated: yes
+    update_cache: true
   notify: 
   - Restart kubelet
 
@@ -58,7 +59,8 @@
   service:
     name: kubelet
     state: started
-    enabled: true
+    enabled: yes
+    
 
 - name: Check if cluster has already been initialized
   stat:
