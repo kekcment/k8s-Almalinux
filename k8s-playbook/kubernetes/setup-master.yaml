@@ -3,14 +3,22 @@
   debug:
     msg: "i am master node"
 
+# - name: Init master node with kubeadm init
+#   shell: >
+#     kubeadm init
+#     --cri-socket /run/cri-dockerd.sock
+#     --pod-network-cidr={{ pod_network_cidr }}
+#     --apiserver-advertise-address={{ inventory_hostname }}
+#     --ignore-preflight-errors='all'
+#   register: kubeadm_init
+  # when: not kubernetes_init_stat.stat.exists
+
 - name: Init master node with kubeadm init
   shell: >
     kubeadm init
-    --pod-network-cidr={{ pod_network_cidr | default('10.244.0.0/16', true) }}
-    --apiserver-advertise-address={{ inventory_hostname }}
+    --cri-socket /run/cri-dockerd.sock
     --ignore-preflight-errors='all'
   register: kubeadm_init
-  when: not kubernetes_init_stat.stat.exists
 
 - name: Print kubeadm init results
   debug:

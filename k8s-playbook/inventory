@@ -1,14 +1,17 @@
 [kubemaster1]
 ; tst-alma-k8s-m1 ansible_ssh_host=192.168.33.9 ansible_user=localadmin
-192.168.33.9 ansible_user=localadmin
+192.168.33.9
+; 84.201.141.253
 
 [kubeworker1]
 ; tst-alma-k8s-w1 ansible_ssh_host=192.168.33.27 ansible_user=localadmin
-192.168.33.27 ansible_user=localadmin
+192.168.33.27
+; 84.201.179.109
 
 [kubeworker2]
 ; tst-alma-k8s-w2 ansible_ssh_host=192.168.35.8 ansible_user=localadmin
-192.168.35.8 ansible_user=localadmin
+192.168.35.8
+; 158.160.16.59
 
 [kubemasters:children]
 kubemaster1

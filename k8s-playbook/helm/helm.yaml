@@ -1,0 +1,29 @@
+---
+# - name: Check Helm exists
+#   stat:
+#     path: /usr/local/bin/helm
+#   register: result
+
+# - name: Download Helm
+#   command: wget https://get.helm.sh/helm-v3.10.3-linux-amd64.tar.gz
+#   when: not result.stat.exists  
+
+# - name: Extract Helm
+#   command: tar xvf helm-v3.10.3-linux-amd64.tar.gz
+#   when: not result.stat.exists
+
+# - name: Move helm the binary to /usr/local/bin
+#   command: sudo mv linux-amd64/helm /usr/local/bin
+#   when: not result.stat.exists
+
+- name: Install helm if not exists
+  unarchive:
+    src: https://get.helm.sh/helm-v3.11.0-linux-amd64.tar.gz
+    dest: /usr/local/bin
+    extra_opts: "--strip-components=1"
+    owner: localadmin
+    group: localadmin
+    mode: 0755
+    remote_src: true
+  args:
+    creates: /usr/local/bin/helm

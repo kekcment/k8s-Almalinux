@@ -1,0 +1,49 @@
+---
+- name: Check cri-dockerd exists
+  stat:
+    path: /usr/local/bin/cri-dockerd
+  register: result
+
+- name: Download zsh installer -(3)
+  command: wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.1/cri-dockerd-0.3.1.amd64.tgz
+  when: not result.stat.exists  
+
+- name: Execute the cri-dockerd-0.3.1.amd64.tgz -(4)
+  command: tar xvf cri-dockerd-0.3.1.amd64.tgz
+  when: not result.stat.exists
+
+- name: Move the binary to /usr/local/bin -(5)
+  command: mv cri-dockerd/cri-dockerd /usr/local/bin/   
+  when: not result.stat.exists
+
+- name: Check cri-docker.service exists
+  stat:
+    path: /etc/systemd/system/cri-docker.service
+  register: result2
+
+- name: Download the cri-dockerd service binary and the socket -(7)
+  command: wget https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/cri-docker.service https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/cri-docker.socket
+  when: not result2.stat.exists
+
+- name: Move both files to /etc/systemd/system/ -(8)
+  command: mv cri-docker.socket cri-docker.service /etc/systemd/system/
+  when: not result2.stat.exists      
+
+- name: Connect the service with the main cri-dockerd binary -(9)
+  command: sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service
+  when: not result2.stat.exists
+
+- name: Reload the daemon configuration -(10)
+  command: systemctl daemon-reload
+  # when: not result2.stat.exists
+
+- name: Enable the service using the systemctl command -(11)
+  command: systemctl enable cri-docker.service
+  # when: not result2.stat.exists
+
+- name: Next, enable the socket -(12)
+  command: systemctl enable --now cri-docker.socket
+  # when: not result2.stat.exists
+
+- name: Confirm that the service is running by typing -(13)
+  command: systemctl status cri-docker.socket

@@ -8,9 +8,18 @@
     - name: Init
       include_tasks: ./init-setup/init-setup.yaml
 
-    - name: Install docker
-      include_tasks: docker.yaml
+    - name: Pre-installation options
+      include_tasks: ./pre-install/options.yaml
 
+    - name: Firewall config
+      include_tasks: ./pre-install/firewall.yaml 
+
+    - name: Install docker
+      include_tasks: ./docker/docker.yaml
+
+    - name: Install cri-docker
+      include_tasks: ./docker/cri-docker.yaml
+     
     - name: Install kubernetes
       include_tasks: ./kubernetes/kubernetes.yaml
 
@@ -21,9 +30,9 @@
       include_tasks: ./metallb/metallb.yaml
       when: kubernetes_role == 'master'
 
-    - name: Setup monitoring
-      include_tasks: ./monitoring/monitoring.yaml
-      when: kubernetes_role == 'master'
+    # - name: Setup monitoring
+    #   include_tasks: ./monitoring/monitoring.yaml
+    #   when: kubernetes_role == 'master'
 
   handlers:
     - name: Restart kubelet

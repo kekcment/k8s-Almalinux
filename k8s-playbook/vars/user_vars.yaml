@@ -1,5 +1,5 @@
 ---
-allow_deploy_on_master: no
+allow_deploy_on_master: yes
 
 # k8s network plugin. currently supports: weave
 # network_plugin: "weave"
@@ -10,9 +10,9 @@ pod_network_cidr: '192.168.32.0/22'
 extra_packages:
   # system performance analysis tools
   - lsof
-  # - htop
-  # - sat-xmpp-core
   - sysstat
-  # - perf-tools-unstable
-  # - tcputils
   - nfs-utils
+  - epel-release
+  - wget
+  - curl
+

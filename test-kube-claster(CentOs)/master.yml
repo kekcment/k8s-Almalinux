@@ -2,7 +2,7 @@
   become: yes
   tasks:
     - name: initialize the cluster
-      shell: kubeadm init --pod-network-cidr=192.168.32.0/22 >> cluster_initialized.txt
+      shell: kubeadm init --cri-socket /run/cri-dockerd.sock --pod-network-cidr=192.168.32.0/22 >> cluster_initialized.txt --ignore-preflight-errors='all'
       args:
         chdir: $HOME
         creates: cluster_initialized.txt

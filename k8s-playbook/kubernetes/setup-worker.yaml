@@ -5,7 +5,7 @@
 
 - name: Print kubeadm join command
   debug:
-    msg: "{{ kubeadm_join_command }}"
+    msg: "{{ kubeadm_join_command }} --cri-socket /run/cri-dockerd.sock --ignore-preflight-errors='all'"
 
 - name: Check if node has already joined cluster
   stat:
@@ -17,6 +17,6 @@
     msg: "{{ worker_cluster_join_status.stat.exists }}"
 
 - name: Add worker node to cluster
-  shell: "{{ kubeadm_join_command }}"
-  when: not worker_cluster_join_status.stat.exists
+  shell: "{{ kubeadm_join_command }} --cri-socket /run/cri-dockerd.sock --ignore-preflight-errors='all'"
+  become: yes
 

@@ -1,4 +1,9 @@
 ---
+- name: Add Red Hat Helm charts repository
+  community.kubernetes.helm_repository:
+    name: redhat-charts
+    repo_url: https://redhat-developer.github.com/redhat-helm-charts
+
 - name: Ensure prometheus-community helm repo is added
   community.kubernetes.helm_repository:
     name: prometheus-community
@@ -25,16 +30,16 @@
   file:
     path: /opt/helm/ingress-nginx
     state: directory
-    owner: root
-    group: root
+    owner: localadmin
+    group: localadmin
     mode: '0644'
 
 - name: Copy ingress-nginx controller values file to target machine
   copy:
     src: ./monitoring/configs/ingress-nginx-controller-values.yaml
     dest: /opt/helm/ingress-nginx/ingress-nginx-controller-values.yaml
-    owner: root
-    group: root
+    owner: localadmin
+    group: localadmin
     mode: '0644'
 
 - name: Install ingress-nginx controller
@@ -50,16 +55,16 @@
   file:
     path: /opt/k8s/monitoring
     state: directory
-    owner: root
-    group: root
+    owner: localadmin
+    group: localadmin
     mode: '0644'
 
 - name: Copy monitoring ingress definition file to target machine
   copy:
     src: ./monitoring/configs/monitoring-ingress.yaml
     dest: /opt/k8s/monitoring/monitoring-ingress.yaml
-    owner: root
-    group: root
+    owner: localadmin
+    group: localadmin
     mode: '0644'
 
 #TODO: this task may timeout depending. might want to consider using async to extend timeout duration. disabling this temporarily

@@ -5,7 +5,7 @@
       - docker
       - docker-engine
       - docker.io
-      - containerd
+      - containerd.io
       - runc
     state: absent
 
@@ -31,20 +31,12 @@
     - ca-certificates
     - curl
     - gnupg2
-#    - software-properties-common
     state: present
-
-# - name: Add docker official GPG key
-#   apt_key:
-#     url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
-#     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
-#     state: present
   
-# - name: Add docker repository
-#   apt_repository:
-#     repo: "deb [arch={{ machine_architecture }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
-#     state: present
-#     update_cache: yes
+- name: Add Docker repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
 
 - name: Install docker engine
   yum:

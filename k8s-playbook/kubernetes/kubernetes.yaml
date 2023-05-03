@@ -19,18 +19,16 @@
   yum:
     update_cache: yes
 
-# - name: Install deps
-#   yum:
-#     name:
-#     - apt-transport-https
-#     - curl
+- name: Install deps
+  pip:
+    name=httplib2
 
 # - name: Add google cloud GPG key
 #   apt_key:
 #     url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 #     state: present
-#     # commenting this out because apt-key module doesnt seem to be detecting it properly
-#     # id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    # commenting this out because apt-key module doesnt seem to be detecting it properly
+    # id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 
 - name: Add kubernetes repository YUM repository
   yum_repository:

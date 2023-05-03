@@ -1,0 +1,11 @@
+- name: Configure SELinux
+  command: setenforce 0
+
+- name: Edit the selinux configuration file
+  command: sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux
+
+- name: Execute the swapoff command
+  command: swapoff -a
+
+- name: Make the change persist across reboots by disabling swap on startup
+  command: sed -i '/ swap / s/^/#/' /etc/fstab

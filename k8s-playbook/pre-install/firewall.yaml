@@ -1,0 +1,18 @@
+---
+- name: Add port to firewalld
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - 6443/tcp
+    - 2379-2380/tcp
+    - 10250-10260/tcp
+    - 179/tcp
+    - 4789/tcp
+    - 30000-32767/tcp
+
+- name: reload service firewalld
+  systemd:
+    name: firewalld
+    state: reloaded       

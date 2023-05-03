@@ -1,8 +1,8 @@
 ---
-- name: Install software-properties-common
-  yum:
-    name: software-properties-common
-    state: present
+# - name: Install software-properties-common
+#   yum:
+#     name: software-properties-common
+#     state: present
 
 # - name: Add ppa:deadsnakes/ppa apt-repository
 #   apt_repository:
@@ -13,7 +13,7 @@
   yum:
     name:
     - python3.9
-    - python3.9-distutils
+    # - python3.9-distutils
 
 - name: Check if pip is installed
   shell: /usr/bin/python3.9 -m pip 
@@ -52,9 +52,9 @@
     group: root
     state: link
 
-- name: Install python-apt package
+- name: Install python-yum package
   yum:
-    name: python3-apt
+    name: python3.9
     state: present
 
 
